@@ -1,2 +1,0 @@
-user ALL=(root) NOPASSWD: /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
-user ALL=(root) NOPASSWD: /usr/bin/lsof
