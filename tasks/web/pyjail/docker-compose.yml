@@ -1,0 +1,49 @@
+version: "3.6"
+
+services:
+    worker:
+      restart: always
+      build: app
+      deploy:
+        resources:
+          limits:
+            cpus: '0.50'
+            memory: 200M
+            pids: 30
+          reservations:
+            cpus: '0.25'
+            memory: 100M
+      labels:
+        - "autoheal=true"
+
+        - "traefik.enable=true"
+
+        - "traefik.http.routers.pyjail.rule=Host(`pyjail.web2.nto.sprush.rocks`)"
+
+        - "traefik.http.services.pyjail.loadbalancer.sticky.cookie=true"
+        - "traefik.http.services.pyjail.loadbalancer.sticky.cookie.name=probably_important_cookie"
+        - "traefik.http.services.pyjail.loadbalancer.server.port=5000"
+
+        - "traefik.http.middlewares.ip-hard-ratelimit.ratelimit.average=200"
+        - "traefik.http.middlewares.ip-hard-ratelimit.ratelimit.burst=100"
+        - "traefik.http.middlewares.ip-hard-ratelimit.ratelimit.sourcecriterion.ipstrategy.depth=1"
+
+        - "traefik.http.routers.pyjail.entrypoints=websecure"
+        - "traefik.http.routers.pyjail.tls.certresolver=myresolver"
+        - "traefik.http.routers.pyjail.middlewares=ip-hard-ratelimit@docker"
+
+      healthcheck:
+        test: curl --fail http://localhost:5000 || exit 1
+        interval: 10s
+        retries: 2
+        start_period: 20s
+        timeout: 10s
+    
+    autoheal:
+      image: willfarrell/autoheal
+      container_name: autoheal
+      volumes:
+        - '/var/run/docker.sock:/var/run/docker.sock'
+      environment:
+        - AUTOHEAL_INTERVAL=10
+        - CURL_TIMEOUT=30

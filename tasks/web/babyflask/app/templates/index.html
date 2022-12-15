@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Main page{% endblock %}
+
+{% block content %}
+  {{ super() }}
+  <div class="container">
+      {% if session.get("user_id") %}
+          <h1> Welcome {{session["username"]}} </h1>
+      {% endif %}
+    </div>
+{% endblock %}

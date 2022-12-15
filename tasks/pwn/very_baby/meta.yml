@@ -1,0 +1,4 @@
+flag: "NTO{https://www.youtube.com/watch?v=-zH_nQDZ10k}"
+description: "You can't show off in NTO chat until you solve this challenge.
+  nc {server} {port}"
+category: "pwn"

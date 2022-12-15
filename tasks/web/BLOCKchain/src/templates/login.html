@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body>
+    <section id="hero">
+        <form id="form" method="post">
+            {% if message %}
+            <p class="warning">--- {{message}} ---</p>
+            {% endif %}
+            <input id="username" name="username" type="text" placeholder="MinecrafterName"/>
+            <input id="password" name="password" type="password" placeholder="Password"/>
+            <button id="submit">Login</button>
+            <p class="message">New here? <a href="/register">Register</a></p>
+        </form>
+    </section>
+</body>
+
+{% endblock %}

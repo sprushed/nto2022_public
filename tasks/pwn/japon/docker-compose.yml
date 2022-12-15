@@ -1,0 +1,13 @@
+version: "3.3"
+services:
+  onichan:
+    privileged: true
+    read_only: true
+    build: .
+    ports:
+      - "7777:7777"
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: "256M"

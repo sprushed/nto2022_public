@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body>
+    <section id="profile">
+        <div class="profile">
+            {% if msg %}
+            <p class="warning">--- {{msg}} ---</p>
+            {% endif %}
+            <div class="category">Author: {{username}}</div>
+            <div class="category">Block id: {{id}}</div>
+            <div class="category">Block status: {{st}}</div>
+            <div class="category">Operations:</div>
+            <ol>
+              {% for j in block[0].split("\n") %}
+                <li>{{j}}</li>
+                {% endfor %}
+            </ol>
+            <div class="category">Waiting for acceptors:</div>
+            <ol>
+              {% for j in acceptors %}
+                <li>{{j[0]}}</li>
+                {% endfor %}
+            </ol>
+        </div>
+    </section>
+</body>
+
+{% endblock %}

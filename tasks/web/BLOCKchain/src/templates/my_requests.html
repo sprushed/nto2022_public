@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body>
+    <section id="profile">
+        {% for i in reqs %}
+        <div class="profile">
+            <form id="form" method="post">
+                <input id="block_id" name="block_id" type="hidden" value="{{i[0]}}"/>
+                <div class="category">Id: {{i[0]}}</div>
+                <button id="submit">Accept</button>
+            </form>
+            <ol>
+                {% for j in i[1].split("\n") %}
+                <li>{{j}}</li>
+                {% endfor %}
+            </ol>
+        </div>
+        {% endfor %}
+    </section>
+</body>
+
+{% endblock %}

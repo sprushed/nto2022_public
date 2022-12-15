@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./src/:/usr/share/nginx/html
+    labels:
+      - "traefik.enable=true"
+      
+      - "traefik.http.routers.${TASK_NAME}.rule=Host(`${TASK_NAME}.web1.nto.sprush.rocks`)"
+      - "traefik.http.services.${TASK_NAME}.loadbalancer.server.port=80"
+
+      - "traefik.http.middlewares.ip-hard-ratelimit.ratelimit.average=400"
+      - "traefik.http.middlewares.ip-hard-ratelimit.ratelimit.burst=50"
+      - "traefik.http.middlewares.ip-hard-ratelimit.ratelimit.sourcecriterion.ipstrategy.depth=1"
+
+      - "traefik.http.routers.${TASK_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.${TASK_NAME}.tls.certresolver=myresolver"
+      - "traefik.http.routers.${TASK_NAME}.middlewares=ip-hard-ratelimit@docker"

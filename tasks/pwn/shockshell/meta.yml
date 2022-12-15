@@ -1,0 +1,5 @@
+flag: "NTO{https://www.youtube.com/watch?v=FoUWHfh733Y}"
+description: "Please prove me you are real shell master.
+  nc {server} {port}
+    "
+category: "pwn"

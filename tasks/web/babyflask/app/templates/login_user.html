@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    {{ super() }}
+    <link href="{{url_for('static', filename='signin.css')}}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <form class="form-signin" action="{{ url_for('login') }}" method="POST">
+      <h2 class="form-signin-heading">Please sign in</h2>
+      {{ form.hidden_tag() }}
+      {{ wtf.form_field(form.username) }}
+      {{ wtf.form_field(form.password) }}
+      {{ wtf.form_field(form.remember) }}
+      {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            {% if category == "error" %}
+                <p style="color:red;">{{message}}</p>
+            {% else %}
+                <p>{{message}}</p>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+
+    <br />
+    <div class="panel panel-default">
+      <div class="panel-body">
+        Don't have an account yet? <a href={{ url_for('register') }}>Create a new account</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

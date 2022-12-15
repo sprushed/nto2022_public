@@ -1,0 +1,69 @@
+body {font-family: 'Playfair Display', serif;}
+
+.title {
+  position: absolute;
+  width: 150px;
+  height: 150px;  
+  margin-top: -75px;
+  margin-left: -75px;
+  top: 50%;
+  left: 50%;
+}
+
+h1 {
+  text-transform: uppercase;
+  font-size: 40px;  
+  line-height: 0.8;
+  text-align: center;
+  color: #9c7501;
+}
+
+span {
+  font-size: 55px;  
+  color: #000;
+}
+
+.arrow {
+  width: 340px;
+	height: 300px;
+  position: absolute;  
+}
+
+.gosling1 {
+  top: -240px;
+  left: -230px;
+	background: url("/static/gosling.jpg");
+  background-size: cover;
+  background-position: 45% 0%;
+	-webkit-clip-path: polygon(0% 50%, 20% 50%, 20% 0%, 80% 0%, 80% 50%, 100% 50%, 50% 100%);
+clip-path: polygon(0% 50%, 20% 50%, 20% 0%, 80% 0%, 80% 50%, 100% 50%, 50% 100%);
+}
+
+.gosling2 {
+  top: -200px;
+  right: -280px;
+	background: url("/static/gosling_barbie.jpeg");  
+  background-size: cover;
+	-webkit-clip-path: polygon(50% 0%, 50% 20%, 100% 20%, 100% 80%, 50% 80%, 50% 100%, 0% 50%);
+clip-path: polygon(50% 0%, 50% 20%, 100% 20%, 100% 80%, 50% 80%, 50% 100%, 0% 50%);
+}
+
+.gosling3 {
+  bottom: -230px;
+  right: -230px;
+	background: url("/static/gosling_br.jpg");
+  background-size: cover;
+  background-position: 70% 0%;
+	-webkit-clip-path: polygon(20% 100%, 20% 50%, 0 50%, 50% 0, 100% 50%, 80% 50%, 80% 100%);
+  clip-path: polygon(20% 100%, 20% 50%, 0 50%, 50% 0, 100% 50%, 80% 50%, 80% 100%);
+}
+
+.gosling {
+  bottom: -190px;
+  left: -280px;
+	background: url("/static/gosling_drive.jpg");
+  background-size: cover;
+  background-position: 20% 0%;
+	-webkit-clip-path: polygon(0% 20%, 50% 20%, 50% 0%, 100% 50%, 50% 100%, 50% 80%, 0% 80%);
+  clip-path: polygon(0% 20%, 50% 20%, 50% 0%, 100% 50%, 50% 100%, 50% 80%, 0% 80%);
+}

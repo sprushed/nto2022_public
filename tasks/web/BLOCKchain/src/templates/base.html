@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" type="text/css" href="/static/minecraft.css">
+<header id="header">
+  <div class="logo">
+    <a href="/">
+      <img id="header-img" src="/static/BLOCKCHAIN.png" />
+    </a>
+  </div>
+  <div class="total">
+    <nav id="nav-bar">
+      <ul>
+        {% if session.get("current_user") %}
+          <li>
+            <a class="nav-link" href="/profile">Profile</a>
+          </li>
+          <li>
+            <a class="nav-link" href="/my_requests">My requests</a>
+          </li>
+          <li>
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        {% else %}
+          <li>
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+          <li>
+            <a class="nav-link" href="/register">Register</a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+</header>
+
+{% block content %}
+{% endblock %}
+
+</html>

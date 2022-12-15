@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Maze</title>
+    <!-- add viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        body {
+            background-color: #000000;
+            color: #ddddee;
+            font-family: sans-serif;
+            font-size: 2em;
+        }
+        .main {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <h1>Maze</h1>
+        <form action="" onsubmit="sendMessage(event)">
+            <input type="text" id="messageText" autocomplete="off" />
+            <button>Send</button>
+        </form>
+        <div id="state">
+            <p>Status: <span id="statusText">Waiting for connection...</span></p>
+            <p>Position: <span id="positionText">0, 0</span></p>
+            <p>Possible moves: <span id="movesText">None</span></p>
+            <p>End: <span id="endText">0, 0</span></p>
+        </div>
+        <script>
+            var ws = new WebSocket("wss://" + location.host + "/ws");
+            ws.onmessage = function (event) {
+                var state = document.getElementById('state')
+                var statusText = document.getElementById('statusText')
+                var positionText = document.getElementById('positionText')
+                var movesText = document.getElementById('movesText')
+                var message = JSON.parse(event.data)
+                var position = message.position
+                var moves = message.possible_moves
+                var status = message.status
+                var end = message.end
+
+                statusText.innerText = status
+                positionText.innerText = position[0] + ", " + position[1]
+                movesText.innerText = moves.join(", ")
+                endText.innerText = end[0] + ", " + end[1]
+            };
+            function sendMessage(event) {
+                var input = document.getElementById("messageText")
+                ws.send(input.value)
+                input.value = ''
+                event.preventDefault()
+            }
+        </script>
+    </div>
+</body>
+
+</html>

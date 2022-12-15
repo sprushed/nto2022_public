@@ -1,0 +1,16 @@
+flag: "NTO{https://www.youtube.com/watch?v=XDGfsNTPSHU}"
+description: "Мы писали. 
+  Мы писали. 
+  Наши пальчики устали. 
+  Мы немного отдохнём 
+  И опять писать начнём
+  
+  nc {server} {port}
+  
+  Hint: best practice for using given libc is
+    ```bash
+    patchelf --set-interpreter ./ld.so --set-rpath . ./warmup   #libc.so.6 must be in the current dir
+    ./warmup
+    ```
+    "
+category: "pwn"

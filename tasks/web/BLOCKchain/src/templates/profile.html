@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body>
+    <section id="profile">
+        <div class="profile">
+            {% if message %}
+            <p class="warning">--- {{message}} ---</p>
+            {% endif %}
+            <div class="category">Minecrafter: {{username}}</div>
+            <div class="category">Balance is {{balance}} / 100 $ </div>
+            <div class="category"> <a href="/buy_flag"> Buy flag is 1337$</a> </div>
+            <div class="category"> <a href="/my_blocks"> My blocks</a> </div>
+
+            <ol>
+
+            </ol>
+        </div>
+    </section>
+</body>
+
+{% endblock %}

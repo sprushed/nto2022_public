@@ -1,0 +1,4 @@
+Flask==2.0.2
+mysql-connector==2.2.9
+mysqlclient==2.1.0
+gunicorn==20.1.0

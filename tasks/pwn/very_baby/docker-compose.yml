@@ -1,0 +1,14 @@
+version: '3.3'
+services:
+  pwn-very_baby:
+    read_only: true
+    build: ./task
+    container_name: pwn-very_baby
+    restart: always
+    ports:
+      - 31337:1337
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: "256M"

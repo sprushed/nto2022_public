@@ -1,0 +1,57 @@
+from fastapi import FastAPI
+from fastapi.responses import JSONResponse
+import sqlite3
+import random
+
+app = FastAPI()
+db = sqlite3.connect("keys.db", check_same_thread=False)
+
+
+def record(id, key):
+    # check if id exists
+    c = db.cursor()
+    c.execute("SELECT * FROM keys WHERE id=?", (id,))
+    if c.fetchone() is None:
+        db.execute("INSERT INTO keys VALUES (?, ?)", (id, key))
+        db.commit()
+        return True
+    else:
+        return False
+
+
+def db_init():
+    c = db.cursor()
+    c.execute("CREATE TABLE IF NOT EXISTS keys (id text, key blob)")
+    db.commit()
+
+
+@app.get("/gen_key/{id}")
+def gen_key(id: str):
+    key = random.randbytes(32)
+    if record(id, key):
+        return {"key": key.hex()}
+    else:
+        return JSONResponse(status_code=409, content={"error": "id already exists"})
+
+
+@app.get("/keys")
+def get_keys():
+    c = db.cursor()
+    c.execute("SELECT * FROM keys")
+    keys = c.fetchall()
+    encoded_keys = []
+    for key in keys:
+        encoded_keys.append({"id": key[0], "key": key[1].hex()})
+
+    return encoded_keys
+
+
+@app.on_event("startup")
+def startup():
+    db_init()
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port=8000)

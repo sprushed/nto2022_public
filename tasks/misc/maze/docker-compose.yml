@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  maze:
+    build:
+      context: .
+
+    volumes:
+      - ./cache:/app/cache
+    labels:
+      - "traefik.enable=true"
+      
+      - "traefik.http.routers.${TASK_NAME}.rule=Host(`${TASK_NAME}.web1.nto.sprush.rocks`)"
+      - "traefik.http.services.${TASK_NAME}.loadbalancer.server.port=8080"
+
+      - "traefik.http.middlewares.ip-hard-ratelimit.ratelimit.average=400"
+      - "traefik.http.middlewares.ip-hard-ratelimit.ratelimit.burst=50"
+      - "traefik.http.middlewares.ip-hard-ratelimit.ratelimit.sourcecriterion.ipstrategy.depth=1"
+
+      - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
+  
+      - "traefik.http.routers.${TASK_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.${TASK_NAME}.tls.certresolver=myresolver"
+      - "traefik.http.routers.${TASK_NAME}.middlewares=ip-hard-ratelimit@docker,sslheader@docker"
+

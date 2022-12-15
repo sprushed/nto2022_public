@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body>
+    <section id="hero">
+        <h2>All blocks collected by hand. No cheats, commands, or creative!</h2>
+        <form id="form" action="#">
+            <input id="email" name="email" type="email" placeholder="kub036@nto.ru" required><br>
+            <input id="submit" type="submit" value="BLOCK">
+        </form>
+    </section>
+    <section id="features">
+        <h2>Fresh minecraft BLOCKchain platform</h2>
+        <p>Your operations is under Herobrine's watch</p>
+        <h2>Quality Products</h2>
+        <p>We guarantee the customer will be 100% happy with their blocks</p>
+        <h2>Full Returns</h2>
+        <p>If an order ships incorrectly or customer is not satisfied, returns will be covered by us!</p>
+    </section>
+    <section id="block-stats">
+        <iframe id="video" width="852" height="480" src="https://www.youtube.com/embed/-oSkZkPXaqA"
+            title="Comparison: Minecraft Blocks And Their Weaknesses" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;    picture-in-picture"
+            allowfullscreen>
+        </iframe>
+    </section>
+    <section id="prices">
+        <div class="product" id="building">
+            <div class="category">Building</div>
+            <h2>$10</h2>
+            <ol>
+                <li>500 Logs (your choice)</li>
+                <li>500 Stone</li>
+                <li>500 Cobblestone</li>
+                <li>6 Chests</li>
+                <li>50 glass</li>
+                <li>6 doors</li>
+            </ol>
+        </div>
+        <div class="product" id="building">
+            <div class="category">Terraforming</div>
+            <h2>$20</h2>
+            <ol>
+                <li>1,000 Dirt</li>
+                <li>500 Cobblestone</li>
+                <li>50 Bonemeal</li>
+                <li>10 Sapplings (your choice)</li>
+            </ol>
+        </div>
+        <div class="product" id="building">
+            <div class="category">Holy Grail</div>
+            <h2>$78</h2>
+            <ol>
+                <li>7-8 diamond hoes</li>
+            </ol>
+        </div>
+        </div>
+</body>
+
+{% endblock %}

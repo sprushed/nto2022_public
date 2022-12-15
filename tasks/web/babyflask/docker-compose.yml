@@ -1,0 +1,37 @@
+version: "3"
+services:
+  db:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./data:/var/lib/postgresql
+    env_file:
+      - config.env
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+
+  app:
+    build: app/
+    restart: always
+    depends_on:
+      - db
+    links:
+      - db
+    env_file:
+      - config.env
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+    labels:
+      - "traefik.enable=true"
+      
+      - "traefik.http.routers.${TASK_NAME}.rule=Host(`${TASK_NAME}.web1.nto.sprush.rocks`)"
+      - "traefik.http.services.${TASK_NAME}.loadbalancer.server.port=1337"
+
+      - "traefik.http.routers.${TASK_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.${TASK_NAME}.tls.certresolver=myresolver"

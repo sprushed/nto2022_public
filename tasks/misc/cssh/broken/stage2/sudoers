@@ -1,0 +1,1 @@
+user ALL=(root) NOPASSWD: /bin/mv /lib/x86_64-linux-gnu/ld-2.31.so /lib/x86_64-linux-gnu/ld-2.31.so.bak

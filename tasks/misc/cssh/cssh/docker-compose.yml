@@ -1,0 +1,29 @@
+---
+
+version: "3"
+
+services:
+  authconfig:
+    build:
+      context: ./authconfig
+    volumes:
+      - ./passwords.yml:/passwords.yml
+
+  containerssh:
+    image: containerssh/containerssh:0.4.1
+    ports:
+      - 0.0.0.0:2222:2222
+    volumes:
+      - type: bind
+        source: config.yml
+        target: /etc/containerssh/config.yaml
+
+      - type: bind
+        source: .secrets/ssh_host_rsa_key
+        target: /var/secrets/ssh_host_rsa_key
+
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+
+    user: root

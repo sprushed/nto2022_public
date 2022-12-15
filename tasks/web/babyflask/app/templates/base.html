@@ -1,0 +1,59 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "wtf2.html" as wtf2 %}
+
+{% block styles %}
+    {{ super() }}
+    <link href="{{url_for('static', filename='base.css')}}" rel="stylesheet">
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{url_for('index')}}"> Hi</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+              {% if session.get("user_id") %}
+                  <a type="button" class="btn btn-default navbar-btn" href={{url_for("logout")}}>Sign out</a>
+              {% else %}
+                  <a type="button" class="btn btn-default navbar-btn" href={{url_for("login")}}>Sign in</a>
+                  <a type="button" class="btn btn-default navbar-btn" href={{url_for("register")}}>Register</a>
+              {% endif %}
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          {% if category == "success" %}
+            {% set bootstrap_class = "alert-success" %}
+          {% elif category == "error" %}
+            {% set bootstrap_class = "alert-error" %}
+          {% else %}
+            {% set bootstrap_class = "alert-info" %}
+          {% endif %}
+            <div class="alert {{bootstrap_class}} alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              {{ message }}
+            </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+</div>
+{% endblock %}

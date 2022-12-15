@@ -1,0 +1,7 @@
+version: "3"
+services:
+  grob:
+    build:
+      context: .
+    ports:
+      - "42069:42069"

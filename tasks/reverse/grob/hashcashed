@@ -1,0 +1,87 @@
+#!/bin/bash
+
+set -Eeuo pipefail
+
+script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
+
+usage() {
+  cat <<EOF
+Usage: $(basename "${BASH_SOURCE[0]}") [-h] -c 10 <command>
+
+Script description here.
+
+Available options:
+
+-h, --help       Print this help and exit
+-v, --verbose    Print script debug info
+-c, --complexity Specify character complexity (default: 10)
+EOF
+  exit
+}
+
+die() {
+  local msg=$1
+  local code=${2-1}
+  echo "$msg"
+  exit "$code"
+}
+
+parse_params() {
+  complexity=10
+
+  while :; do
+    case "${1-}" in
+    -h | --help) usage ;;
+    -v | --verbose) set -x ;;
+    -c | --complexity)
+      complexity="${2-}"
+      shift
+      ;;
+    -?*) die "Unknown option: $1" ;;
+    *) break ;;
+    esac
+    shift
+  done
+
+  args=("$@")
+
+  # check required params and arguments
+  [[ ${#args[@]} -eq 0 ]] && die "Missing command to launch"
+
+  return 0
+}
+
+function rndstr() {
+    echo $RANDOM | md5sum | head -c 10
+}
+
+function check_pow() {
+    local proof=$(echo $1 | sed 's/hashcash stamp: //')
+
+    if hashcash "-cdb${complexity}" -r "${salt}" "${proof}"; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+function generate_pow() {
+    salt=$(rndstr)
+
+    echo "Provide output of the following command:"
+    echo "hashcash -mb$complexity $salt"
+}
+
+function main() {
+    generate_pow
+    read -r proof
+    if check_pow "$proof" -eq 0; then
+        echo "Proof of work verified"
+        "${args[@]}"
+    else
+        die "Proof of work failed"
+    fi
+}
+
+parse_params "$@"
+main
